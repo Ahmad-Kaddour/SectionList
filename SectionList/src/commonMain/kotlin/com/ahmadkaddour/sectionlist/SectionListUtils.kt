@@ -16,10 +16,8 @@ internal fun Int.toSectionIndex(sectionsSizePrefixSum: List<Int>): Int {
 
         if (midVal < this)
             low = mid + 1
-        else if (midVal > this)
-            high = mid - 1
         else
-            return mid
+            high = mid - 1
     }
     return low
 }
