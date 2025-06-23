@@ -1,9 +1,8 @@
 package com.ahmadkaddour.sectionlist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.interaction.DragInteraction
-import androidx.compose.foundation.lazy.LazyListPrefetchStrategy
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -113,36 +112,16 @@ class SectionListState(
 @Composable
 fun rememberSectionListState(
     sectionsSize: List<Int>,
-    initialFirstVisibleItemIndex: Int = 0,
-    initialFirstVisibleItemScrollOffset: Int = 0
+    lazyListState: LazyListState = rememberLazyListState()
 ): SectionListState {
-    return rememberSaveable(saver = SectionListState.Saver) {
+    return rememberSaveable(
+        sectionsSize,
+        lazyListState,
+        saver = SectionListState.Saver
+    ) {
         SectionListState(
             sectionsSize = sectionsSize,
-            lazyListState = LazyListState(
-                initialFirstVisibleItemIndex,
-                initialFirstVisibleItemScrollOffset
-            )
-        )
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun rememberSectionListState(
-    sectionsSize: List<Int>,
-    initialFirstVisibleItemIndex: Int = 0,
-    initialFirstVisibleItemScrollOffset: Int = 0,
-    prefetchStrategy: LazyListPrefetchStrategy = LazyListPrefetchStrategy()
-): SectionListState {
-    return rememberSaveable(saver = SectionListState.Saver) {
-        SectionListState(
-            sectionsSize = sectionsSize,
-            lazyListState = LazyListState(
-                initialFirstVisibleItemIndex,
-                initialFirstVisibleItemScrollOffset,
-                prefetchStrategy
-            )
+            lazyListState = lazyListState
         )
     }
 }
