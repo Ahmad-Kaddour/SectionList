@@ -25,7 +25,8 @@ import kotlinx.coroutines.flow.onEach
  * Represents the state of a list with distinct sections.
  * It allows observing the current visible section and scrolling to specific sections.
  *
- * @property sectionsSize A list where each element is the number of items in the corresponding section.
+ * @property sectionsSize A list where each element represents the total number of items in the corresponding section,
+ * including any headers or footers that may be present.
  * @property lazyListState The underlying [LazyListState] used to control the scrolling behavior.
  */
 @Stable
@@ -171,7 +172,8 @@ class SectionListState(
  * Creates and remembers a [SectionListState] for controlling and observing a sectioned list.
  * This state handles mapping between item indices and section indices.
  *
- * @param sectionsSize A list where each element represents the number of items in the corresponding section.
+ * @property sectionsSize A list where each element represents the total number of items in the corresponding section,
+ * including any headers or footers that may be present.
  * @param lazyListState The state of the lazy list.
  * @return A remembered [SectionListState].
  */
