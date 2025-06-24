@@ -57,5 +57,5 @@ internal fun Int.toItemIndex(sectionsSizePrefixSum: List<Int>): Int {
         "Section index ($this) is out of bounds. Max valid section index is ${sectionsSizePrefixSum.lastIndex}."
     }
 
-    return if (this == 0) 0 else sectionsSizePrefixSum[this - 1] - 1
+    return if (this == 0) 0 else sectionsSizePrefixSum[this - 1]
 }
