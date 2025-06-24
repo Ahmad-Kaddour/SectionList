@@ -12,8 +12,11 @@ internal fun List<Int>.toPrefixSum(): List<Int> {
  *
  * @param sectionsSizePrefixSum A list representing the prefix sum of the sizes of all sections.
  * @return The index of the section to which the item belongs.
+ * @throws IllegalArgumentException if it's called on negative int.
  */
 internal fun Int.toSectionIndex(sectionsSizePrefixSum: List<Int>): Int {
+    if (this < 0) throw IllegalArgumentException("Index can't be negative")
+
     var low = 0
     var high = sectionsSizePrefixSum.lastIndex
 
@@ -35,7 +38,10 @@ internal fun Int.toSectionIndex(sectionsSizePrefixSum: List<Int>): Int {
  *
  * @param sectionsSizePrefixSum A list representing the prefix sum of the sizes of all sections.
  * @return The item index in the flattened list that corresponds to the start of the section.
+ * @throws IllegalArgumentException if it's called on negative int.
  */
 internal fun Int.toItemIndex(sectionsSizePrefixSum: List<Int>): Int {
+    if (this < 0) throw IllegalArgumentException("Index can't be negative")
+
     return if (this <= 0) 0 else sectionsSizePrefixSum[this - 1] - 1
 }
