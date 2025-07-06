@@ -12,16 +12,19 @@ internal fun List<Int>.toPrefixSum(): List<Int> {
  *
  * @param sectionsSizePrefixSum A list representing the prefix sum of the sizes of all sections.
  * @return The index of the section to which the item belongs.
- * @throws IllegalArgumentException if `itemIndex` is negative, `sectionsSizePrefixSum` is empty,
+ *         If sectionsSizePrefixSum is empty, returns 0 by default.
+ * @throws IllegalArgumentException if `itemIndex` is negative,
  *                                  or `itemIndex` is out of bounds (greater than or equal to the total number of items).
  */
 internal fun Int.toSectionIndex(sectionsSizePrefixSum: List<Int>): Int {
     require(this >= 0) {
         "Item index cannot be negative: $this"
     }
-    require(sectionsSizePrefixSum.isNotEmpty()) {
-        "sectionsSizePrefixSum cannot be empty."
+
+    if (sectionsSizePrefixSum.isEmpty()) {
+        return  0
     }
+
     require(this < sectionsSizePrefixSum.last()) {
         "Item index ($this) is out of bounds for the total number of items (${sectionsSizePrefixSum.last()})."
     }
@@ -47,12 +50,17 @@ internal fun Int.toSectionIndex(sectionsSizePrefixSum: List<Int>): Int {
  *
  * @param sectionsSizePrefixSum A list representing the prefix sum of the sizes of all sections.
  * @return The item index in the flattened list that corresponds to the start of the section.
- * @throws IllegalArgumentException if `sectionIndex` is negative, `sectionsSizePrefixSum` is empty,
+ *         If sectionsSizePrefixSum is empty, returns 0 by default.
+ * @throws IllegalArgumentException if `sectionIndex` is negative,
  *                                  or `sectionIndex` is out of bounds (greater than the number of sections).
  **/
 internal fun Int.toItemIndex(sectionsSizePrefixSum: List<Int>): Int {
     require(this >= 0) { "Section index cannot be negative: $this" }
-    require(sectionsSizePrefixSum.isNotEmpty()) { "sectionsSizePrefixSum cannot be empty." }
+
+    if (sectionsSizePrefixSum.isEmpty()) {
+        return  0
+    }
+
     require(this <= sectionsSizePrefixSum.lastIndex) {
         "Section index ($this) is out of bounds. Max valid section index is ${sectionsSizePrefixSum.lastIndex}."
     }

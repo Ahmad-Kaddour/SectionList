@@ -68,15 +68,15 @@ class ItemToSectionIndexTest {
     }
 
     @Test
-    fun `throws when itemIndex is negative`() {
-        val prefixSum = listOf(5, 10)
-        assertFailsWith<IllegalArgumentException> { (-1).toSectionIndex(prefixSum) }
+    fun `default to 0 when sectionsSizePrefixSum is empty`() {
+        val prefixSum = emptyList<Int>()
+        assertEquals(0, 0.toSectionIndex(prefixSum))
     }
 
     @Test
-    fun `throws when sectionsSizePrefixSum is empty`() {
-        val prefixSum = emptyList<Int>()
-        assertFailsWith<IllegalArgumentException> { 0.toSectionIndex(prefixSum) }
+    fun `throws when itemIndex is negative`() {
+        val prefixSum = listOf(5, 10)
+        assertFailsWith<IllegalArgumentException> { (-1).toSectionIndex(prefixSum) }
     }
 
     @Test
