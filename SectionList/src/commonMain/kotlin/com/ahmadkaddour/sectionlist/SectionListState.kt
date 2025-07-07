@@ -125,6 +125,8 @@ class SectionListState(
      * @param scrollOffset The offset that the section should end up after the scroll.
      */
     suspend fun scrollToSection(sectionIndex: Int, scrollOffset: Int = 0) {
+        if (sectionSizesPrefixSum.isEmpty()) return
+
         val targetSection = sectionIndex.coerceIn(0, sectionSizesPrefixSum.lastIndex)
         selectedSectionProgrammatically = targetSection
         lazyListState.scrollToItem(
@@ -139,6 +141,8 @@ class SectionListState(
      * @param scrollOffset The offset within the section to scroll to.
      */
     suspend fun animateScrollToSection(sectionIndex: Int, scrollOffset: Int = 0) {
+        if (sectionSizesPrefixSum.isEmpty()) return
+
         val targetSection = sectionIndex.coerceIn(0, sectionSizesPrefixSum.lastIndex)
         selectedSectionProgrammatically = targetSection
         lazyListState.animateScrollToItem(
