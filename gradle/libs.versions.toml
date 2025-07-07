@@ -2,9 +2,11 @@
 agp = "8.10.1"
 kotlin = "2.2.0"
 compose-plugin = "1.8.2"
+turbine = "1.2.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
