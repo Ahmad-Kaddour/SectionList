@@ -83,7 +83,7 @@ class SectionListState(
      * Resets the programmatically selected section. Typically called when user interaction
      * like dragging overrides a programmatic scroll.
      */
-    private fun resetProgrammaticSectionSelection() {
+    fun resetProgrammaticSectionSelection() {
         selectedSectionProgrammatically = null
     }
 
