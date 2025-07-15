@@ -1,6 +1,5 @@
 package com.ahmadkaddour.sectionlist
 
-import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -12,14 +11,16 @@ import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
 
 /**
  * Represents the state of a list with distinct sections.
@@ -38,18 +39,22 @@ class SectionListState(
 
     private var selectedSectionProgrammatically by mutableStateOf<Int?>(null)
 
-    // Flow from drag interactions. We only care about the event, not its value.
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val userDragInteractionFlow: Flow<Boolean> =
-        snapshotFlow { lazyListState.interactionSource }
-            .flatMapLatest { it.interactions }
-            .mapLatest { interaction -> interaction is DragInteraction.Start && selectedSectionProgrammatically != null }
-            .distinctUntilChanged()
-            .onEach { reset ->
-                if (reset) {
-                    resetProgrammaticSectionSelection()
-                }
+
+    /**
+     * A [NestedScrollConnection] that should be attached to a [Modifier.nestedScroll] in order to
+     * detect when the list is being scrolled manually by the user.
+     */
+    val nestedScrollConnection = object : NestedScrollConnection {
+        override fun onPreScroll(
+            available: Offset,
+            source: NestedScrollSource
+        ): Offset {
+            if (source == NestedScrollSource.UserInput) {
+                resetProgrammaticSectionSelection()
             }
+            return super.onPreScroll(available, source)
+        }
+    }
 
     /**
      * A flow emitting the index of the current prominent section.
@@ -58,8 +63,7 @@ class SectionListState(
     val currentSectionIndex: Flow<Int> by lazy {
         merge(
             snapshotFlow { lazyListState.layoutInfo },
-            snapshotFlow { selectedSectionProgrammatically },
-            userDragInteractionFlow.map { }
+            snapshotFlow { selectedSectionProgrammatically }
         ).mapLatest {
             determineCurrentSectionIndex()
         }.distinctUntilChanged()
