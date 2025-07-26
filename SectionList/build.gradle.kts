@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.maven.publish)
 }
 
 kotlin {
@@ -83,5 +84,44 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(automaticRelease = true)
+
+    signAllPublications()
+
+    coordinates(
+        groupId = "io.github.ahmad-kaddour",
+        artifactId = "section-list",
+        version = "1.0.0"
+    )
+
+    pom {
+        name = "SectionList"
+        description = "KMP Library to categorize and group lazy list items into sections with scroll-to-section and current section tracking support."
+        inceptionYear = "2025"
+        url = "https://github.com/Ahmad-Kaddour/SectionList/"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "Ahmad-Kaddour"
+                name = "Ahmad Kaddour"
+                url = "https://github.com/Ahmad-Kaddour/"
+                email = "ahmad.kadour222@gmail.com"
+            }
+        }
+        scm {
+            url = "https://github.com/Ahmad-Kaddour/SectionList/"
+            connection = "scm:git:git://github.com/Ahmad-Kaddour/SectionList.git"
+            developerConnection = "scm:git:ssh://github.com:Ahmad-Kaddour/SectionList.git"
+        }
     }
 }
