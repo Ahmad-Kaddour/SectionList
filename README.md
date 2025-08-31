@@ -26,6 +26,6 @@ implementation("io.github.ahmad-kaddour:section-list:1.0.0")
 
 ## License
 
-Copyright (C) 2023 Ahmad Haj Kaddour
+Copyright (C) 2025 Ahmad Haj Kaddour
 
 Licensed under the Apache License, Version 2.0
