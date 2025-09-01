@@ -7,6 +7,12 @@ A Kotlin Multiplatform library for categorizing and grouping lazy list items int
 
 This library is optimized, it uses a custom algorithm to track the current section instead of treating the entire section as a single element, which can cause performance issues.
 
+## Demo
+
+| Android | iOS |
+|---------|-----|
+| ![Android Demo](https://media.giphy.com/media/cMV5ab4aCTXnQwdppq/giphy.gif) | ![iOS Demo](https://media.giphy.com/media/Miov3Mvn9tKnMpPcG9/giphy.gif) |
+
 ## Platform support
 
 `SectionList` supports these platforms:
